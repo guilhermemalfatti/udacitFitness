@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import { getMetricMetaInfo, timeToString } from '../utils/helper'
-import Slider from './Slider'
+import UdaciSlider from './UdaciSlider'
 import Steppers from './Steppers'
 import DateHeader from './DateHeader'
 
@@ -19,7 +19,7 @@ export default class AddEntry extends Component {
         run: 0,
         bike: 0,
         swim: 0,
-        sleep: 110,
+        sleep: 0,
         eat: 0,
     }
     increment = (metric) => {
@@ -79,7 +79,7 @@ export default class AddEntry extends Component {
                         <View key={key}>
                             {getIcon()}
                             {type === 'slider'
-                                ? <Slider
+                                ? <UdaciSlider
                                     value={value}
                                     onChange={(value) => this.slide(key, value)}
                                     {...rest}
