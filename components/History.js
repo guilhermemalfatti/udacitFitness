@@ -7,8 +7,13 @@ import { fetchCalendarResults } from '../utils/api'
 import UdaciFitnessCalendar from 'udacifitness-calendar'
 import { white } from '../utils/colors'
 import DateHeader from './DateHeader'
+import MetricCard from './MetricCard'
+import { AppLoading } from 'expo'
 
 class History extends Component {
+    state = {
+        ready: false,
+    }
     componentDidMount() {
         const { dispatch } = this.props
 
@@ -21,7 +26,7 @@ class History extends Component {
                     }))
                 }
             })
-            .then(() => this.setState(() => ({ ready: true })))
+           .then(() => this.setState(() => ({ ready: true })))
     }
     renderItem = ({ today, ...metrics }, formattedDate, key) => (
         <View style={styles.item}>
@@ -34,7 +39,7 @@ class History extends Component {
                 : <TouchableOpacity
                     onPress={() => console.log('Pressed!')}
                 >
-                    <Text>{JSON.stringify(metrics)}</Text>
+                    <MetricCard date={formattedDate} metrics={metrics} />
                 </TouchableOpacity>}
         </View>
     )
@@ -50,6 +55,14 @@ class History extends Component {
     }
     render() {
         const { entries } = this.props
+        const { ready } = this.state
+
+        if (ready === false) {
+            return <View>
+                <Text>teste</Text>
+            </View>
+            return <AppLoading />
+        }
 
         return (
             <UdaciFitnessCalendar
@@ -64,27 +77,27 @@ class History extends Component {
 
 const styles = StyleSheet.create({
     item: {
-      backgroundColor: white,
-      borderRadius: Platform.OS === 'ios' ? 16 : 2,
-      padding: 20,
-      marginLeft: 10,
-      marginRight: 10,
-      marginTop: 17,
-      justifyContent: 'center',
-      shadowRadius: 3,
-      shadowOpacity: 0.8,
-      shadowColor: 'rgba(0, 0, 0, 0.24)',
-      shadowOffset: {
-        width: 0,
-        height: 3
-      },
+        backgroundColor: white,
+        borderRadius: Platform.OS === 'ios' ? 16 : 2,
+        padding: 20,
+        marginLeft: 10,
+        marginRight: 10,
+        marginTop: 17,
+        justifyContent: 'center',
+        shadowRadius: 3,
+        shadowOpacity: 0.8,
+        shadowColor: 'rgba(0, 0, 0, 0.24)',
+        shadowOffset: {
+            width: 0,
+            height: 3
+        },
     },
     noDataText: {
-      fontSize: 20,
-      paddingTop: 20,
-      paddingBottom: 20
+        fontSize: 20,
+        paddingTop: 20,
+        paddingBottom: 20
     }
-  })
+})
 
 function mapStateToProps(entries) {
     return {
