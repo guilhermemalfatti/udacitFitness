@@ -1,7 +1,7 @@
-// utils/_calendar.js
+// Utilities for backfilling the calendar.
 
 import { AsyncStorage } from 'react-native'
-import { getMetricMetaInfo, timeToString } from './helper'
+import { getMetricMetaInfo, timeToString } from './helpers'
 
 export const CALENDAR_STORAGE_KEY = 'UdaciFitness:calendar'
 
@@ -51,7 +51,7 @@ function setMissingDates (dates) {
 }
 
 export function formatCalendarResults (results) {
-  return results === null
+  return results === null || results === '{}'
     ? setDummyData()
     : setMissingDates(JSON.parse(results))
 }
